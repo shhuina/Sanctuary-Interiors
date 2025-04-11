@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body, html {
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    .navbar {
+      background-color: #fff;
+      padding: 0.5rem 1rem;
+    }
+    .navbar-nav .nav-link {
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #007bff;
+    }
+    .navbar-nav .nav-item.active .nav-link {
+      color: #5a5a5a;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    .filter-btn.active {
+      background-color: #333;
+      color: #fff;
+    }
+    .product-card {
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      margin-bottom: 1.5rem;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .card-body {
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .price-column {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .btn-secondary {
+      font-weight: 500;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background-color: #333;
+      color: #fff;
+    }
+    .row {
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .col-md-4 {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand font-weight-bold" href="index.html" style="font-size: 1.5rem; color: #333;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="products.html">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Our Products</h2>
+
+  <div class="text-center mb-4">
+    <button class="btn btn-outline-dark m-1 filter-btn active" data-filter="ALL">All</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="LIVING ROOM">Living Room</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="BEDROOM">Bedroom</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="DINING ROOM">Dining Room</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="OUTDOOR">Outdoor</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="ENTRYWAY AND HALLWAY">Entryway & Hallway</button>
+    <button class="btn btn-outline-dark m-1 filter-btn" data-filter="HOME OFFICE">Home Office</button>
+  </div>
+
+  <div class="row" id="product-grid"></div>
+</div>
+
+<script>
+    const products = [
+      { name: "Modern Sofa", category: "LIVING ROOM", price: "₱2,999.99", image: "images/sofa.jpg", id: 1 },
+      { name: "Wooden Coffee Table", category: "LIVING ROOM", price: "₱1,499.99", image: "images/coffeetable.jpg", id: 2 },
+      { name: "TV Stand", category: "LIVING ROOM", price: "₱1,999.99", image: "images/tvstand.jpg", id: 3 },
+      { name: "Wall Clock", category: "LIVING ROOM", price: "₱1,199.99", image: "images/clock.jpg", id: 4 },
+      { name: "Pouffe", category: "LIVING ROOM", price: "₱899.99", image: "images/pouffe.jpg", id: 5 },
+      { name: "Curtains", category: "LIVING ROOM", price: "₱1,999.99", image: "images/curtains.jpg", id: 6 },
+      { name: "Bed", category: "BEDROOM", price: "₱3,999.99", image: "images/bed.jpg", id: 7 },
+      { name: "Nightstand", category: "BEDROOM", price: "₱799.99", image: "images/nightstand.jpg", id: 8 },
+      { name: "Dresser", category: "BEDROOM", price: "₱1,999.99", image: "images/dresser.jpg", id: 9 },
+      { name: "Wardrobe", category: "BEDROOM", price: "₱3,499.99", image: "images/wardrobe.jpg", id: 10 },
+      { name: "Vanity Table", category: "BEDROOM", price: "₱2,299.99", image: "images/vanity.jpg", id: 11 },
+      { name: "Black-out Pleated Blind", category: "BEDROOM", price: "₱3,999.99", image: "images/blind.jpg", id: 12 },
+      { name: "Dining Table", category: "DINING ROOM", price: "₱2,799.99", image: "images/diningtable.jpg", id: 13 },
+      { name: "Dining Chair", category: "DINING ROOM", price: "₱699.99", image: "images/diningchair.jpg", id: 14 },
+      { name: "Bar Stool", category: "DINING ROOM", price: "₱999.99", image: "images/barstool.jpg", id: 15 },
+      { name: "Utility Cart", category: "DINING ROOM", price: "₱1,299.99", image: "images/utilitycart.jpg", id: 16 },
+      { name: "Trash Can", category: "DINING ROOM", price: "₱499.99", image: "images/trashcan.jpg", id: 17 },
+      { name: "Wall Art", category: "DINING ROOM", price: "₱499.99", image: "images/wallart.jpg", id: 18 },
+      { name: "Desk", category: "HOME OFFICE", price: "₱1,899.99", image: "images/desk.jpg", id: 19 },
+      { name: "Office Chair", category: "HOME OFFICE", price: "₱1,099.99", image: "images/officechair.jpg", id: 20 },
+      { name: "Desk Lamp", category: "HOME OFFICE", price: "₱299.99", image: "images/desklamp.jpg", id: 21 },
+      { name: "Bench with Backrest", category: "OUTDOOR", price: "₱1,099.99", image: "images/bench.jpg", id: 25 },
+      { name: "Outdoor Table", category: "OUTDOOR", price: "₱1,599.99", image: "images/outdoortable.jpg", id: 26 },
+      { name: "Modular Corner Sofa", category: "OUTDOOR", price: "₱1,999.99", image: "images/cornersofa.jpg", id: 27 },
+      { name: "Rug Flatwoven", category: "OUTDOOR", price: "₱2,099.99", image: "images/rug.jpg", id: 28 },
+      { name: "Umbrella", category: "OUTDOOR", price: "₱799.99", image: "images/umbrella.jpg", id: 29 },
+      { name: "Plant Pot", category: "OUTDOOR", price: "₱100.00", image: "images/pot.jpg", id: 30 },
+      { name: "Console Table", category: "ENTRYWAY AND HALLWAY", price: "₱1,299.99", image: "images/consoletable.jpg", id: 31 },
+      { name: "Shoe Rack", category: "ENTRYWAY AND HALLWAY", price: "₱699.99", image: "images/shoerack.jpg", id: 32 },
+      { name: "Coat Rack", category: "ENTRYWAY AND HALLWAY", price: "₱599.99", image: "images/coatrack.jpg", id: 33 },
+      { name: "Storage Bench", category: "ENTRYWAY AND HALLWAY", price: "₱1,199.99", image: "images/storagebench.jpg", id: 34 },
+      { name: "Wall Mirror", category: "ENTRYWAY AND HALLWAY", price: "₱899.99", image: "images/wallmirror.jpg", id: 35 },
+      { name: "Wall Art", category: "ENTRYWAY AND HALLWAY", price: "₱899.99", image: "images/wallart1.jpg", id: 36 }
+    ];
+  
+    const productGrid = document.getElementById("product-grid");
+  
+    function renderProducts(category = "ALL") {
+      productGrid.innerHTML = "";
+      products.forEach(product => {
+        if (category === "ALL" || product.category === category) {
+          productGrid.innerHTML += `
+            <div class="col-md-4 product-card" data-category="${product.category}">
+              <div class="card h-100 d-flex flex-column justify-content-between">
+                <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                  <h5 class="card-title">${product.name}</h5>
+                  <p class="price-column">${product.price}</p>
+                  <div class="d-flex justify-content-end mt-auto gap-2">
+                    <button class="btn btn-light border" title="Add to Favorites">&#10084;</button>
+                    <button class="btn btn-dark" title="Add to Cart">&#128722;</button>
+                  </div>
+                </div>
+              </div>
+            </div>`; 
+        }
+      });
+    }
+  
+    renderProducts();
+  
+    document.querySelectorAll(".filter-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        renderProducts(button.getAttribute("data-filter"));
+      });
+    });
+</script>
+</body>
+</html>
